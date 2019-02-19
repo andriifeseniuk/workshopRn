@@ -4,11 +4,14 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
 
 import MoviesList from './../../components/MoviesList';
+import Second from '../Second/Second';
 
 import { fetchMovies } from './../../api';
 
 import sharedStyle from './../../shared/style';
 import style from './style';
+
+const fakeTimeout = 3000;
 
 type Props = {};
 type State = {};
@@ -21,13 +24,14 @@ class Feed extends Component<Props, State> {
   };
 
   componentDidMount() {
-    this.loadMovies();
+    // this.loadMovies();
   }
 
   loadMovies = () => {
     this.setState({ loading: true });
     
     fetchMovies(this.state.page)
+      .then(res => new Promise(resolve => setTimeout(() => resolve(res), fakeTimeout)))
       .then(res => {
         if (this.state.data) {
           // this.setState({ data: [...this.state.data, ...res] });
@@ -52,6 +56,9 @@ class Feed extends Component<Props, State> {
 
     return (
       <SafeAreaView style={{ backgroundColor: 'white', borderWidth: 1, borderColor: 'red', flex: 1 }}>
+        {loading && (
+          <Second/>
+        )}
         {!data && !loading && (
           <TouchableOpacity
             onPress={this.loadMovies}
@@ -60,11 +67,12 @@ class Feed extends Component<Props, State> {
             <Text style={style.buttonLabel}>Find Stuff</Text>
           </TouchableOpacity>
         )}
+        {data && !loading && (
         <MoviesList
           loadMore={this.loadMore}
           loading={loading}
           data={data}
-        />
+        />)}
       </SafeAreaView>
     );
   }
