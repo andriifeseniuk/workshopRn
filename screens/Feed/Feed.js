@@ -11,7 +11,7 @@ import { fetchMovies } from './../../api';
 import sharedStyle from './../../shared/style';
 import style from './style';
 
-const fakeTimeout = 3000;
+const fakeTimeout = 2000;
 
 type Props = {};
 type State = {};
@@ -33,8 +33,9 @@ class Feed extends Component<Props, State> {
     fetchMovies(this.state.page)
       .then(res => new Promise(resolve => setTimeout(() => resolve(res), fakeTimeout)))
       .then(res => {
+        res.forEach(element => element.updated = new Date());
+
         if (this.state.data) {
-          // this.setState({ data: [...this.state.data, ...res] });
           this.state.data.push(...res)
         } else {
           this.setState({ data: res });

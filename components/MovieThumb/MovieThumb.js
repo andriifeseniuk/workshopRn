@@ -11,12 +11,13 @@ type Props = {
   Type: string;
   Year: string;
   imdbID: string;
+  updated: Date;
 };
 type State = {};
 
 class MovieThumb extends Component<Props, State> {
   render() {
-    const { Title, Poster } = this.props;
+    const { Title, Poster, updated } = this.props;
     return (
       <View style={style.container}>
         <Image
@@ -25,6 +26,7 @@ class MovieThumb extends Component<Props, State> {
           resizeMode="contain"
         />
         <Text>{Title}</Text>
+        <Text>{updated.toString()}</Text>
       </View>
     );
   }

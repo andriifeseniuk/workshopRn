@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, RefreshControl  } from 'react-native';
 
 import MovieThumb from './../MovieThumb';
 
@@ -23,7 +23,29 @@ class MoviesList extends Component<Props, State> {
   keyExtractor = (item, index) => item.imdbID;
 
   onEndReached = () => {
+    
     this.props.loadMore();
+  }
+
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    
+    console.log('refreshing');
+    // var randomIndex = Math.floor(Math.random() * this.props.data.lenght);
+    // var item = this.props.data.splice(randomIndex, 1);
+    // item.updated = new Date();
+    // this.props.data.unshift(item);
+
+    var item = {
+			"Title": "Title" + Math.random() * 10000,
+			"Year": 1900 + Math.random() * 120,
+			"imdbID": "tt" + Math.random() * 1000000,
+      "Type": "movie",
+      updated: new Date
+    };
+    this.props.data.unshift(item);
+
+    this.setState({refreshing: false});
   }
 
   render() {
@@ -36,6 +58,12 @@ class MoviesList extends Component<Props, State> {
           keyExtractor={this.keyExtractor}
           renderItem={this.renderMovieThumbNail}
           onEndReached={this.onEndReached}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
         />
         </View>
     );
