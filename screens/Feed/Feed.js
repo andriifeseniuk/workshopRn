@@ -33,8 +33,6 @@ class Feed extends Component<Props, State> {
     fetchMovies(this.state.page)
       .then(res => new Promise(resolve => setTimeout(() => resolve(res), fakeTimeout)))
       .then(res => {
-        res.forEach(element => element.updated = new Date());
-
         if (this.state.data) {
           this.state.data.push(...res)
         } else {

@@ -30,19 +30,9 @@ class MoviesList extends Component<Props, State> {
   onRefresh = () => {
     this.setState({refreshing: true});
     
-    console.log('refreshing');
-    // var randomIndex = Math.floor(Math.random() * this.props.data.lenght);
-    // var item = this.props.data.splice(randomIndex, 1);
-    // item.updated = new Date();
-    // this.props.data.unshift(item);
-
-    var item = {
-			"Title": "Title" + Math.random() * 10000,
-			"Year": 1900 + Math.random() * 120,
-			"imdbID": "tt" + Math.random() * 1000000,
-      "Type": "movie",
-      updated: new Date
-    };
+    var randomIndex = Math.floor(Math.random() * (this.props.data.length - 1));
+    var item = this.props.data.splice(randomIndex, 1)[0];
+    item.updated = new Date();
     this.props.data.unshift(item);
 
     this.setState({refreshing: false});

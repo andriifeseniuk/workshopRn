@@ -26,7 +26,7 @@ class MovieThumb extends Component<Props, State> {
           resizeMode="contain"
         />
         <Text>{Title}</Text>
-        <Text>{updated.toString()}</Text>
+        {updated && <Text>{updated.toString()}</Text>}
       </View>
     );
   }
