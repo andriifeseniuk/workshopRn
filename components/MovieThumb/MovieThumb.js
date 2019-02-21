@@ -11,7 +11,6 @@ type Props = {
   Type: string;
   Year: string;
   imdbID: string;
-  updated: Date;
 };
 type State = {};
 
@@ -26,7 +25,6 @@ class MovieThumb extends Component<Props, State> {
           resizeMode="contain"
         />
         <Text>{Title}</Text>
-        {updated && <Text>{updated.toString()}</Text>}
       </View>
     );
   }

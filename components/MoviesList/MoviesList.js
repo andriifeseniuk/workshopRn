@@ -30,10 +30,7 @@ class MoviesList extends Component<Props, State> {
   onRefresh = () => {
     this.setState({refreshing: true});
     
-    var randomIndex = Math.floor(Math.random() * (this.props.data.length - 1));
-    var item = this.props.data.splice(randomIndex, 1)[0];
-    item.updated = new Date();
-    this.props.data.unshift(item);
+    this.updated = new Date();
 
     this.setState({refreshing: false});
   }
@@ -42,6 +39,7 @@ class MoviesList extends Component<Props, State> {
     const { data, loading } = this.props;
     return (
       <View style={{flex: 1}}>
+        {this.updated && (<Text>{this.updated.toTimeString()}</Text>)}
         <FlatList
           data={data}
           scrollable
