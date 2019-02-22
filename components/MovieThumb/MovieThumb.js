@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
 
 import style from './style';
 
@@ -18,12 +18,15 @@ class MovieThumb extends Component<Props, State> {
   render() {
     const { Title, Poster, updated } = this.props;
     return (
-      <View style={style.container}>
+      <View>
+      <TouchableOpacity style={style.container} onPress={() => this.props.navigation.navigate('Details', this.props)}>
         <Image
           style={style.image}
           source={{ uri: Poster }}
           resizeMode="contain"
+          
         />
+        </TouchableOpacity>
         <Text>{Title}</Text>
       </View>
     );

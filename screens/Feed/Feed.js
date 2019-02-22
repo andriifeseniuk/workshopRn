@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, Button } from 'react-native';
 
 import MoviesList from './../../components/MoviesList';
 import Second from '../Second/Second';
@@ -71,6 +71,7 @@ class Feed extends Component<Props, State> {
           loadMore={this.loadMore}
           loading={loading}
           data={data}
+          navigation={this.props.navigation}
         />)}
       </SafeAreaView>
     );

@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { View, Text, ActivityIndicator, FlatList, RefreshControl  } from 'react-native';
+import { View, Text, Button, ActivityIndicator, FlatList, RefreshControl  } from 'react-native';
 
 import MovieThumb from './../MovieThumb';
 
@@ -17,7 +17,7 @@ class MoviesList extends Component<Props, State> {
   };
 
   renderMovieThumbNail = ({ item }, index) => (
-    <MovieThumb key={item.imdbID} {...item} />
+    <MovieThumb key={item.imdbID} {...item} navigation={this.props.navigation}/>
   );
 
   keyExtractor = (item, index) => item.imdbID;
