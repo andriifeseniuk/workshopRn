@@ -30,9 +30,15 @@ class MoviesList extends Component<Props, State> {
   onRefresh = () => {
     this.setState({refreshing: true});
     
-    this.updated = new Date();
-
-    this.setState({refreshing: false});
+    this.props.refreshAsync()
+      .then(() => {
+        this.updated = new Date();
+        this.setState({refreshing: false});
+      })
+      .catch(err => {
+        console.error(err);
+        this.setState({ refreshing: false });
+      });
   }
 
   render() {

@@ -50,6 +50,13 @@ class Feed extends Component<Props, State> {
     this.setState((state) => ({ page: state.page + 1}), this.loadMovies);
   };
 
+  refreshMoviesAsync = () => {
+    this.setState({ page: 1 });
+
+    return fetchMovies(1)
+    .then(res => this.setState({ data: res }));
+  }
+
   render() {
     const { loading, data } = this.state;
 
@@ -71,6 +78,7 @@ class Feed extends Component<Props, State> {
           loadMore={this.loadMore}
           loading={loading}
           data={data}
+          refreshAsync={this.refreshMoviesAsync}
         />)}
       </SafeAreaView>
     );
