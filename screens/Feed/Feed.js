@@ -1,7 +1,7 @@
 
 // @flow
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, Button } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, SafeAreaView, Button, TextInput } from 'react-native';
 
 import MoviesList from './../../components/MoviesList';
 import Second from '../Second/Second';
@@ -21,6 +21,7 @@ class Feed extends Component<Props, State> {
     loading: false,
     data: null,
     page: 1,
+    filterText: null,
   };
 
   componentDidMount() {
@@ -30,7 +31,7 @@ class Feed extends Component<Props, State> {
   loadMovies = () => {
     this.setState({ loading: true });
     
-    fetchMovies(this.state.page)
+    fetchMovies(this.state.page, this.state.filterText)
       .then(res => new Promise(resolve => setTimeout(() => resolve(res), fakeTimeout)))
       .then(res => {
         if (this.state.data) {
@@ -53,7 +54,7 @@ class Feed extends Component<Props, State> {
   refreshMoviesAsync = () => {
     this.setState({ page: 1 });
 
-    return fetchMovies(1)
+    return fetchMovies(1, this.state.filterText)
     .then(res => this.setState({ data: res }));
   }
 
@@ -66,12 +67,19 @@ class Feed extends Component<Props, State> {
           <Second/>
         )}
         {!data && !loading && (
-          <TouchableOpacity
-            onPress={this.loadMovies}
-            style={style.button}
-          >
-            <Text style={style.buttonLabel}>Find Stuff</Text>
-          </TouchableOpacity>
+          <View>  
+            <TextInput
+              style={{height: 40}}
+              placeholder="Type text to filter"
+              onChangeText={(text) => this.setState({ filterText: text })}
+            />
+            <TouchableOpacity
+              onPress={this.loadMovies}
+              style={style.button}
+            >
+              <Text style={style.buttonLabel}>Find Stuff</Text>
+            </TouchableOpacity>
+          </View>
         )}
         {data && !loading && (
         <MoviesList
